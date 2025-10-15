@@ -49,47 +49,47 @@ footer{text-align:center;padding:12px;margin-top:20px;border-top:1px solid var(-
 
 <div class="grid">
   <section class="catalog">
-    <!-- 60 UC -->
-    <div class="card" data-base="9.99" data-uc="60">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACA..." alt="60 UC">
+    <!-- Paquetes -->
+    <div class="card" data-uc="60" data-official="0.99">
+      <img src="https://i.imgur.com/1B8m5pY.png" alt="60 UC">
       <h3>60 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="60" data-base="9.99">Seleccionar</button>
+      <button class="btn btn-paypal select-btn" data-uc="60" data-official="0.99">Seleccionar</button>
     </div>
-    <!-- 300 UC -->
-    <div class="card" data-base="9.99" data-uc="300">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACA..." alt="300 UC">
+
+    <div class="card" data-uc="300" data-official="4.99">
+      <img src="https://i.imgur.com/Zb1h9Lv.png" alt="300 UC">
       <h3>300 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="300" data-base="9.99">Seleccionar</button>
+      <button class="btn btn-paypal select-btn" data-uc="300" data-official="4.99">Seleccionar</button>
     </div>
-    <!-- 680 UC -->
-    <div class="card" data-base="9.99" data-uc="680">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACA..." alt="680 UC">
+
+    <div class="card" data-uc="680" data-official="9.99">
+      <img src="https://i.imgur.com/T2lq2vG.png" alt="680 UC">
       <h3>680 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="680" data-base="9.99">Seleccionar</button>
+      <button class="btn btn-paypal select-btn" data-uc="680" data-official="9.99">Seleccionar</button>
     </div>
-    <!-- 1320 UC -->
-    <div class="card" data-base="9.99" data-uc="1320">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACA..." alt="1320 UC">
+
+    <div class="card" data-uc="1320" data-official="19.99">
+      <img src="https://i.imgur.com/4Z3bU7L.png" alt="1320 UC">
       <h3>1320 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="1320" data-base="9.99">Seleccionar</button>
+      <button class="btn btn-paypal select-btn" data-uc="1320" data-official="19.99">Seleccionar</button>
     </div>
-    <!-- 2640 UC -->
-    <div class="card" data-base="9.99" data-uc="2640">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACA..." alt="2640 UC">
+
+    <div class="card" data-uc="2640" data-official="49.99">
+      <img src="https://i.imgur.com/lj3vfxG.png" alt="2640 UC">
       <h3>2640 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="2640" data-base="9.99">Seleccionar</button>
+      <button class="btn btn-paypal select-btn" data-uc="2640" data-official="49.99">Seleccionar</button>
     </div>
-    <!-- 8100 UC -->
-    <div class="card" data-base="9.99" data-uc="8100">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACA..." alt="8100 UC">
+
+    <div class="card" data-uc="8100" data-official="99.99">
+      <img src="https://i.imgur.com/XvBpT6U.png" alt="8100 UC">
       <h3>8100 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="8100" data-base="9.99">Seleccionar</button>
+      <button class="btn btn-paypal select-btn" data-uc="8100" data-official="99.99">Seleccionar</button>
     </div>
   </section>
 
@@ -135,17 +135,19 @@ footer{text-align:center;padding:12px;margin-top:20px;border-top:1px solid var(-
 <footer>© Ismewel Top-Up — Recargas oficiales mediante Midasbuy / canales autorizados.</footer>
 
 <script>
-// Precio final fijo $9.99 + $4
+// Calcular precio final según precio oficial + $4
 document.querySelectorAll('.card').forEach(card=>{
-  const final=(9.99+4).toFixed(2);
-  card.querySelector('.final').textContent=final;
+  const officialPrice = parseFloat(card.dataset.official);
+  const final = (officialPrice + 4).toFixed(2);
+  card.querySelector('.final').textContent = final;
 });
 
 // Seleccionar paquete
 document.querySelectorAll('.select-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
     const uc=btn.dataset.uc;
-    const final=(9.99+4).toFixed(2);
+    const officialPrice=parseFloat(btn.dataset.official);
+    const final=(officialPrice+4).toFixed(2);
     document.getElementById('pack').value=uc+' UC';
     document.getElementById('price').value='$'+final;
     document.getElementById('nick').scrollIntoView({behavior:'smooth'});
@@ -162,7 +164,6 @@ function handleSendOrder(e){
   const country=document.getElementById('country').value.trim().toLowerCase();
   const method=document.getElementById('method').value;
 
-  // Validación país/método
   if(country !== 'ecuador' && method==='bank'){
     alert('Solo usuarios de Ecuador pueden pagar por Banco Pichincha. Otros países deben usar PayPal.');
     return false;
