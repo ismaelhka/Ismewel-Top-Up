@@ -17,18 +17,16 @@ Página web para recargar UC de PUBG Mobile con PayPal y Banco Pichincha.
 }
 body{margin:0;font-family:'Arial',sans-serif;background:var(--bg);color:var(--text);}
 .wrap{max-width:1200px;margin:0 auto;padding:20px;}
-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:20px;border-bottom:2px solid var(--accent);}
+header{display:flex;flex-direction:column;align-items:center;padding-bottom:20px;border-bottom:2px solid var(--accent);}
 .logo{font-size:28px;font-weight:700;color:var(--primary);}
-h1{font-size:22px;margin:0;}
-.lead{color:var(--muted);margin-top:6px;}
+h1{font-size:22px;margin:6px 0;}
+.lead{color:var(--muted);text-align:center;}
 .grid{display:grid;grid-template-columns:3fr 1fr;gap:20px;margin-top:20px;}
 .catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;}
-.card{background:var(--card-bg);border-radius:12px;overflow:hidden;text-align:center;box-shadow:0 0 15px rgba(0,0,0,0.5);}
-.card img{width:100%;height:140px;object-fit:cover;}
-.card h3{margin:10px 0;font-size:18px;}
-.price{color:var(--accent);font-weight:700;margin:4px 0;}
-.btn{display:inline-block;margin:6px 0;padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:700;text-decoration:none;color:#fff;}
-.btn-paypal{background:#003087;}
+.card{background:linear-gradient(135deg,#ff6600,#ff9900);border-radius:12px;overflow:hidden;text-align:center;box-shadow:0 0 15px rgba(0,0,0,0.5);color:#fff;position:relative;height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.card h3{margin:0;font-size:20px;font-weight:700;}
+.price{color:#fff;font-weight:700;margin-top:6px;font-size:16px;}
+.btn{margin-top:8px;padding:8px 12px;border:none;border-radius:8px;cursor:pointer;font-weight:700;color:#fff;background:#003087;}
 .sidebar{background:var(--card-bg);padding:16px;border-radius:12px;box-shadow:0 0 15px rgba(0,0,0,0.5);}
 .order-form label{display:block;margin-top:12px;color:var(--muted);}
 .order-form input, .order-form select{width:100%;padding:10px;margin-top:6px;border-radius:8px;border:none;background:#2a2a2a;color:#fff;}
@@ -41,55 +39,47 @@ footer{text-align:center;padding:12px;margin-top:20px;border-top:1px solid var(-
 <div class="wrap">
 <header>
   <div class="logo">Ismewel Top-Up</div>
-  <div>
-    <h1>Recarga UC PUBG Mobile</h1>
-    <p class="lead">Usuarios de Ecuador pueden pagar por Banco Pichincha. Usuarios de otros países deben usar PayPal. Confirmamos la recarga tras verificar el pago.</p>
-  </div>
+  <h1>Recarga UC PUBG Mobile</h1>
+  <p class="lead">Usuarios de Ecuador pueden pagar por Banco Pichincha. Otros países deben usar PayPal. Confirmamos la recarga tras verificar el pago.</p>
 </header>
 
 <div class="grid">
   <section class="catalog">
-    <!-- Paquetes UC con precio oficial + $4 -->
+    <!-- Tarjetas estilo Canva con UC y precio -->
     <div class="card" data-uc="60" data-price="0.99">
-      <img src="https://via.placeholder.com/220x140.png?text=60+UC" alt="60 UC">
       <h3>60 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="60" data-price="0.99">Seleccionar</button>
+      <button class="btn select-btn" data-uc="60" data-price="0.99">Seleccionar</button>
     </div>
 
     <div class="card" data-uc="300" data-price="4.99">
-      <img src="https://via.placeholder.com/220x140.png?text=300+UC" alt="300 UC">
       <h3>300 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="300" data-price="4.99">Seleccionar</button>
+      <button class="btn select-btn" data-uc="300" data-price="4.99">Seleccionar</button>
     </div>
 
     <div class="card" data-uc="680" data-price="9.99">
-      <img src="https://via.placeholder.com/220x140.png?text=680+UC" alt="680 UC">
       <h3>680 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="680" data-price="9.99">Seleccionar</button>
+      <button class="btn select-btn" data-uc="680" data-price="9.99">Seleccionar</button>
     </div>
 
     <div class="card" data-uc="1320" data-price="19.99">
-      <img src="https://via.placeholder.com/220x140.png?text=1320+UC" alt="1320 UC">
       <h3>1320 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="1320" data-price="19.99">Seleccionar</button>
+      <button class="btn select-btn" data-uc="1320" data-price="19.99">Seleccionar</button>
     </div>
 
     <div class="card" data-uc="2640" data-price="49.99">
-      <img src="https://via.placeholder.com/220x140.png?text=2640+UC" alt="2640 UC">
       <h3>2640 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="2640" data-price="49.99">Seleccionar</button>
+      <button class="btn select-btn" data-uc="2640" data-price="49.99">Seleccionar</button>
     </div>
 
     <div class="card" data-uc="8100" data-price="99.99">
-      <img src="https://via.placeholder.com/220x140.png?text=8100+UC" alt="8100 UC">
       <h3>8100 UC</h3>
       <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn btn-paypal select-btn" data-uc="8100" data-price="99.99">Seleccionar</button>
+      <button class="btn select-btn" data-uc="8100" data-price="99.99">Seleccionar</button>
     </div>
   </section>
 
@@ -127,7 +117,7 @@ footer{text-align:center;padding:12px;margin-top:20px;border-top:1px solid var(-
         <small>Después de pagar, envía el comprobante a <strong>quinteroismael38@gmail.com</strong> incluyendo tu nick y país de residencia.</small>
       </div>
 
-      <button class="btn btn-paypal" type="submit" style="width:100%;margin-top:12px;">Notificar pago</button>
+      <button class="btn" type="submit" style="width:100%;margin-top:12px;">Notificar pago</button>
     </form>
   </aside>
 </div>
@@ -174,4 +164,14 @@ function handleSendOrder(e){
     'Nueva orden desde la web\n\nNick: '+nick+
     '\nPlataforma: '+platform+
     '\nPaquete: '+pack+
-    '\nPrecio: '+price
+    '\nPrecio: '+price+
+    '\nPaís de residencia: '+country+
+    '\nMétodo: '+(method==='paypal'?'PayPal (paypal.me/Ismewel)':'Depósito Banco Pichincha 2212896512 (Cuenta de ahorro)')+
+    '\n\nEnvía el comprobante a quinteroismael38@gmail.com incluyendo tu nick y país de residencia.'
+  );
+  window.location.href='mailto:quinteroismael38@gmail.com?subject='+subject+'&body='+body;
+  return false;
+}
+</script>
+</body>
+</html>
