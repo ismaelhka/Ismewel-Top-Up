@@ -1,6 +1,5 @@
 # Ismewel-Top-Up
 Página web para recargar UC de PUBG Mobile con PayPal y Banco Pichincha.
-<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -24,16 +23,23 @@ header p{margin:5px 0 0;color:var(--muted);}
 main{max-width:1000px;margin:30px auto;padding:0 20px;}
 label{display:block;margin-top:10px;font-size:14px;color:var(--muted);}
 input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#111;}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-top:15px;}
-.card{background:var(--card-bg);border-radius:12px;padding:20px;text-align:center;box-shadow:0 3px 8px rgba(0,0,0,0.15);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
-.card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.3);}
-.card h3{margin:0;color:var(--primary);}
-.card p{margin:8px 0 0;font-weight:700;color:var(--accent);}
+input[type="text"]#country{padding-right:35px;}
 .btn{margin-top:12px;background:var(--btn);color:#fff;padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:600;transition:background .2s;width:100%;}
 .btn:hover{background:#002060;}
 .order-summary{margin-top:15px;padding:10px;border:1px dashed var(--accent);border-radius:8px;font-size:13px;color:var(--muted);}
 footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(--accent);font-size:13px;color:var(--muted);}
 .verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
+.search-container{position:relative;}
+.search-container input{width:100%;padding-right:35px;}
+.search-container button{
+  position:absolute;right:5px;top:50%;transform:translateY(-50%);
+  border:none;background:transparent;cursor:pointer;font-size:18px;color:var(--accent);
+}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-top:15px;}
+.card{background:var(--card-bg);border-radius:12px;padding:20px;text-align:center;box-shadow:0 3px 8px rgba(0,0,0,0.15);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
+.card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+.card h3{margin:0;color:var(--primary);}
+.card p{margin:8px 0 0;font-weight:700;color:var(--accent);}
 </style>
 </head>
 <body>
@@ -87,7 +93,10 @@ footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(-
 <input type="text" id="price" readonly placeholder="$0.00">
 
 <label>País</label>
-<input list="countries" id="country" required placeholder="Escribe tu país">
+<div class="search-container">
+  <input list="countries" id="country" placeholder="Escribe tu país" required>
+  <button type="button">🔍</button>
+</div>
 <datalist id="countries">
 <option value="Ecuador">
 <option value="Argentina">
@@ -99,6 +108,7 @@ footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(-
 <option value="España">
 <option value="Estados Unidos">
 <option value="Venezuela">
+<!-- Puedes agregar todos los países -->
 </datalist>
 
 <label>Método de pago</label>
@@ -128,7 +138,6 @@ const paypalLink = document.getElementById('paypal-link');
 
 cards.forEach(card=>{
   card.addEventListener('click',()=>{
-    // Remover selección anterior
     cards.forEach(c=>c.style.border="none");
     card.style.border="2px solid var(--primary)";
     const price = card.dataset.price;
