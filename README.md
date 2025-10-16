@@ -29,17 +29,19 @@ input[type="text"]#country{padding-right:35px;}
 .order-summary{margin-top:15px;padding:10px;border:1px dashed var(--accent);border-radius:8px;font-size:13px;color:var(--muted);}
 footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(--accent);font-size:13px;color:var(--muted);}
 .verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
-.search-container{position:relative;}
-.search-container input{width:100%;padding-right:35px;}
-.search-container button{
-  position:absolute;right:5px;top:50%;transform:translateY(-50%);
-  border:none;background:transparent;cursor:pointer;font-size:18px;color:var(--accent);
-}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-top:15px;}
 .card{background:var(--card-bg);border-radius:12px;padding:20px;text-align:center;box-shadow:0 3px 8px rgba(0,0,0,0.15);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
 .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.3);}
 .card h3{margin:0;color:var(--primary);}
 .card p{margin:8px 0 0;font-weight:700;color:var(--accent);}
+.payment-methods{display:none;margin-top:15px;}
+.payment-method{padding:10px;border:1px solid #ddd;border-radius:8px;margin-top:8px;background:#fafafa;}
+.payment-method strong{color:var(--primary);}
+.search-container{position:relative;}
+.search-container button{
+  position:absolute;right:5px;top:50%;transform:translateY(-50%);
+  border:none;background:transparent;cursor:pointer;font-size:18px;color:var(--accent);
+}
 </style>
 </head>
 <body>
@@ -98,30 +100,25 @@ footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(-
   <button type="button">🔍</button>
 </div>
 <datalist id="countries">
-<option value="Ecuador">
-<option value="Argentina">
-<option value="Brasil">
-<option value="Chile">
-<option value="Colombia">
-<option value="México">
-<option value="Perú">
-<option value="España">
-<option value="Estados Unidos">
-<option value="Venezuela">
-<!-- Puedes agregar todos los países -->
+<!-- Lista completa de países -->
+<option value="Afganistán"><option value="Albania"><option value="Alemania"><option value="Andorra"><option value="Angola">
+<option value="Argentina"><option value="Armenia"><option value="Australia"><option value="Austria"><option value="Azerbaiyán">
+<option value="Bahamas"><option value="Bangladés"><option value="Barbados"><option value="Bélgica"><option value="Belice">
+<option value="Bolivia"><option value="Brasil"><option value="Canadá"><option value="Chile"><option value="China">
+<option value="Colombia"><option value="Costa Rica"><option value="Cuba"><option value="Ecuador"><option value="España">
+<option value="Estados Unidos"><option value="Francia"><option value="Grecia"><option value="Guatemala"><option value="Honduras">
+<option value="India"><option value="Indonesia"><option value="Italia"><option value="Japón"><option value="México">
+<option value="Perú"><option value="Venezuela"><option value="Uruguay"><option value="Paraguay"><option value="Portugal">
+<!-- Agrega más según necesites -->
 </datalist>
 
-<label>Método de pago</label>
-<select id="method" required>
-<option value="">Selecciona método</option>
-<option value="paypal">PayPal / Tarjeta de débito o crédito</option>
-<option value="bank">Banco Pichincha (solo Ecuador)</option>
-</select>
-
-<div class="order-summary">
-<p>💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong></p>
-<p>🌐 PayPal / Tarjeta: <a id="paypal-link" href="https://www.paypal.me/ismaelquintero2018/1" target="_blank" style="color:var(--accent)">Pagar con PayPal</a></p>
-<small>Tras pagar, envía el comprobante a <strong>ismaelquintero2018@gmail.com</strong> con tu nick y país.</small>
+<div class="payment-methods" id="payment-methods">
+  <div class="payment-method" id="paypal-method">
+    🌐 PayPal / Tarjeta: <a id="paypal-link" href="https://www.paypal.me/ismaelquintero2018/1" target="_blank">Pagar con PayPal</a>
+  </div>
+  <div class="payment-method" id="bank-method">
+    💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong>
+  </div>
 </div>
 
 <button class="btn" type="submit">Enviar pedido por correo</button>
@@ -135,6 +132,7 @@ footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(-
 const cards = document.querySelectorAll('.card');
 const priceInput = document.getElementById('price');
 const paypalLink = document.getElementById('paypal-link');
+const paymentMethods = document.getElementById('payment-methods');
 
 cards.forEach(card=>{
   card.addEventListener('click',()=>{
@@ -144,6 +142,8 @@ cards.forEach(card=>{
     const uc = card.dataset.uc;
     priceInput.value = `$${price}`;
     paypalLink.href = `https://www.paypal.me/ismaelquintero2018/${price}`;
+    // Mostrar métodos de pago
+    paymentMethods.style.display = 'block';
   });
 });
 
@@ -155,13 +155,5 @@ document.getElementById('order-form').addEventListener('submit', e=>{
   const uc = document.querySelector('.card[style*="border"]')?.dataset.uc || '';
   const price = priceInput.value;
   const country = document.getElementById('country').value;
-  const method = document.getElementById('method').value;
-  const subject = encodeURIComponent(`Nueva orden UC - ${uc} UC - ${nick}`);
-  const body = encodeURIComponent(
-`Orden de recarga:\n\nNick: ${nick}\nPlataforma: ${platform}\nPaquete: ${uc} UC\nPrecio: ${price}\nPaís: ${country}\nMétodo: ${method}\n\nEnviar comprobante a ismaelquintero2018@gmail.com`
-  );
-  window.location.href = `mailto:ismaelquintero2018@gmail.com?subject=${subject}&body=${body}`;
-});
-</script>
-</body>
-</html>
+  const method = (country.toLowerCase() === 'ecuador') ? 'Banco Pichincha / PayPal' : 'PayPal / Tarjeta';
+  const subject = encodeURIComponent(`Nueva orden UC -
