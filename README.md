@@ -23,12 +23,8 @@ header p{margin:5px 0 0;color:var(--muted);}
 main{max-width:1000px;margin:30px auto;padding:0 20px;}
 label{display:block;margin-top:10px;font-size:14px;color:var(--muted);}
 input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#111;}
-input[type="text"]#country{padding-right:35px;}
 .btn{margin-top:12px;background:var(--btn);color:#fff;padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:600;transition:background .2s;width:100%;}
 .btn:hover{background:#002060;}
-.order-summary{margin-top:15px;padding:10px;border:1px dashed var(--accent);border-radius:8px;font-size:13px;color:var(--muted);}
-footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(--accent);font-size:13px;color:var(--muted);}
-.verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-top:15px;}
 .card{background:var(--card-bg);border-radius:12px;padding:20px;text-align:center;box-shadow:0 3px 8px rgba(0,0,0,0.15);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
 .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.3);}
@@ -37,11 +33,7 @@ footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(-
 .payment-methods{display:none;margin-top:15px;}
 .payment-method{padding:10px;border:1px solid #ddd;border-radius:8px;margin-top:8px;background:#fafafa;}
 .payment-method strong{color:var(--primary);}
-.search-container{position:relative;}
-.search-container button{
-  position:absolute;right:5px;top:50%;transform:translateY(-50%);
-  border:none;background:transparent;cursor:pointer;font-size:18px;color:var(--accent);
-}
+.verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
 </style>
 </head>
 <body>
@@ -95,26 +87,30 @@ footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(-
 <input type="text" id="price" readonly placeholder="$0.00">
 
 <label>País</label>
-<div class="search-container">
-  <input list="countries" id="country" placeholder="Escribe tu país" required>
-  <button type="button">🔍</button>
-</div>
-<datalist id="countries">
-<!-- Lista completa de países -->
-<option value="Afganistán"><option value="Albania"><option value="Alemania"><option value="Andorra"><option value="Angola">
-<option value="Argentina"><option value="Armenia"><option value="Australia"><option value="Austria"><option value="Azerbaiyán">
-<option value="Bahamas"><option value="Bangladés"><option value="Barbados"><option value="Bélgica"><option value="Belice">
-<option value="Bolivia"><option value="Brasil"><option value="Canadá"><option value="Chile"><option value="China">
-<option value="Colombia"><option value="Costa Rica"><option value="Cuba"><option value="Ecuador"><option value="España">
-<option value="Estados Unidos"><option value="Francia"><option value="Grecia"><option value="Guatemala"><option value="Honduras">
-<option value="India"><option value="Indonesia"><option value="Italia"><option value="Japón"><option value="México">
-<option value="Perú"><option value="Venezuela"><option value="Uruguay"><option value="Paraguay"><option value="Portugal">
-<!-- Agrega más según necesites -->
-</datalist>
+<select id="country" required>
+  <option value="">Selecciona tu país</option>
+  <option value="Ecuador">Ecuador</option>
+  <option value="Argentina">Argentina</option>
+  <option value="Brasil">Brasil</option>
+  <option value="Chile">Chile</option>
+  <option value="Colombia">Colombia</option>
+  <option value="México">México</option>
+  <option value="Perú">Perú</option>
+  <option value="España">España</option>
+  <option value="Estados Unidos">Estados Unidos</option>
+  <option value="Venezuela">Venezuela</option>
+  <option value="Uruguay">Uruguay</option>
+  <option value="Paraguay">Paraguay</option>
+  <option value="Bolivia">Bolivia</option>
+  <!-- Agrega todos los países que necesites -->
+</select>
 
 <div class="payment-methods" id="payment-methods">
   <div class="payment-method" id="paypal-method">
-    🌐 PayPal / Tarjeta: <a id="paypal-link" href="https://www.paypal.me/ismaelquintero2018/1" target="_blank">Pagar con PayPal</a>
+    🌐 PayPal / Tarjeta de débito: 
+    <a id="paypal-link" href="https://www.paypal.com/paypalme/jaimeroldos2018@gmail.com/1" target="_blank">
+      Pagar con PayPal o tarjeta de débito
+    </a>
   </div>
   <div class="payment-method" id="bank-method">
     💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong>
@@ -128,7 +124,7 @@ footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(-
 <footer>© 2025 Recargas oficiales — Todos los derechos reservados</footer>
 
 <script>
-// Selección de paquete con tarjetas
+// Paquetes clicables
 const cards = document.querySelectorAll('.card');
 const priceInput = document.getElementById('price');
 const paypalLink = document.getElementById('paypal-link');
@@ -141,8 +137,7 @@ cards.forEach(card=>{
     const price = card.dataset.price;
     const uc = card.dataset.uc;
     priceInput.value = `$${price}`;
-    paypalLink.href = `https://www.paypal.me/ismaelquintero2018/${price}`;
-    // Mostrar métodos de pago
+    paypalLink.href = `https://www.paypal.com/paypalme/jaimeroldos2018@gmail.com/${price}`;
     paymentMethods.style.display = 'block';
   });
 });
@@ -156,4 +151,21 @@ document.getElementById('order-form').addEventListener('submit', e=>{
   const price = priceInput.value;
   const country = document.getElementById('country').value;
   const method = (country.toLowerCase() === 'ecuador') ? 'Banco Pichincha / PayPal' : 'PayPal / Tarjeta';
-  const subject = encodeURIComponent(`Nueva orden UC -
+  const subject = encodeURIComponent(`Nueva orden UC - ${uc} UC - ${nick}`);
+  const body = encodeURIComponent(
+`Orden de recarga:
+
+Nick: ${nick}
+Plataforma: ${platform}
+Paquete: ${uc} UC
+Precio: ${price}
+País: ${country}
+Método: ${method}
+
+Enviar comprobante a jaimeroldos2018@gmail.com`
+  );
+  window.location.href = `mailto:jaimeroldos2018@gmail.com?subject=${subject}&body=${body}`;
+});
+</script>
+</body>
+</html>
