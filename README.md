@@ -70,10 +70,13 @@ h1{
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  transition: transform 0.2s;
+  transition: transform 0.2s, border 0.2s;
 }
 .card:hover{
   transform: scale(1.05);
+}
+.card.selected{
+  border: 3px solid var(--accent);
 }
 .card h3{
   margin:0;
@@ -224,7 +227,7 @@ footer{
       </div>
 
       <button class="btn" type="submit" style="width:100%;margin-top:12px;">Notificar pago</button>
-      <div class="feedback" id="feedback">¡Orden lista! Revisa tu correo para enviar el comprobante.</div>
+      <div class="feedback" id="feedback">¡Orden recibida! Revisa tu correo para enviar el comprobante.</div>
     </form>
   </div>
 </div>
@@ -253,12 +256,12 @@ document.querySelectorAll('.select-btn').forEach(btn=>{
     document.getElementById('nick').scrollIntoView({behavior:'smooth'});
 
     // Resaltar tarjeta seleccionada
-    document.querySelectorAll('.card').forEach(c=>c.style.border="none");
-    btn.parentElement.style.border = `3px solid var(--accent)`;
+    document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+    btn.parentElement.classList.add('selected');
   });
 });
 
-// Enviar orden por mail
+// Enviar orden simulada
 document.getElementById('orderForm').addEventListener('submit', function(e){
   e.preventDefault();
   const nick = document.getElementById('nick').value.trim();
@@ -268,7 +271,6 @@ document.getElementById('orderForm').addEventListener('submit', function(e){
   const country = document.getElementById('country').value.trim().toLowerCase();
   const method = document.getElementById('method').value;
 
-  // Validación
   if(!nick || !platform || !pack || !price || !country || !method){
     alert('Por favor completa todos los campos.');
     return false;
@@ -278,24 +280,21 @@ document.getElementById('orderForm').addEventListener('submit', function(e){
     return false;
   }
 
-  const subject = encodeURIComponent('Nueva orden UC - '+pack+' - '+nick);
-  const body = encodeURIComponent(
-    'Nueva orden desde la web\n\nNick: '+nick+
-    '\nPlataforma: '+platform+
-    '\nPaquete: '+pack+
-    '\nPrecio: '+price+
-    '\nPaís de residencia: '+country+
-    '\nMétodo: '+(method==='paypal'?'PayPal (paypal.me/Ismewel)':'Depósito Banco Pichincha 2212896512 (Cuenta de ahorro)')+
-    '\n\nEnvía el comprobante a quinteroismael38@gmail.com incluyendo tu nick y país de residencia.'
-  );
+  // Guardar orden en localStorage como simulación de backend
+  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+  orders.push({nick, platform, pack, price, country, method, date: new Date().toISOString()});
+  localStorage.setItem('orders', JSON.stringify(orders));
 
-  // Abrir cliente de correo
-  window.location.href='mailto:quinteroismael38@gmail.com?subject='+subject+'&body='+body;
-
-  // Feedback visual
+  // Mostrar feedback
   const feedback = document.getElementById('feedback');
   feedback.style.display = 'block';
   feedback.scrollIntoView({behavior:'smooth'});
+
+  // Limpiar formulario
+  document.getElementById('orderForm').reset();
+  document.getElementById('pack').value = '';
+  document.getElementById('price').value = '';
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
 });
 </script>
 </body>
