@@ -3,299 +3,136 @@ Página web para recargar UC de PUBG Mobile con PayPal y Banco Pichincha.
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ismewel Top-Up — Recarga UC PUBG Mobile</title>
-<style>
-:root{
-  --primary:#ff6600;
-  --bg:#0f0f0f;
-  --card-bg:#1e1e1e;
-  --text:#ffffff;
-  --muted:#cccccc;
-  --accent:#ff9900;
-}
-body{
-  margin:0;
-  font-family:'Arial',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-.wrap{
-  max-width:1200px;
-  margin:0 auto;
-  padding:20px;
-}
-header{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding-bottom:20px;
-  border-bottom:2px solid var(--accent);
-}
-.logo{
-  font-size:28px;
-  font-weight:700;
-  color:var(--primary);
-}
-h1{
-  font-size:22px;
-  margin:6px 0;
-}
-.lead{
-  color:var(--muted);
-  text-align:center;
-}
-.grid{
-  display:grid;
-  grid-template-columns:3fr 1fr;
-  gap:20px;
-  margin-top:20px;
-}
-.catalog{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:20px;
-}
-.card{
-  background:linear-gradient(135deg,#ff6600,#ff9900);
-  border-radius:12px;
-  overflow:hidden;
-  text-align:center;
-  box-shadow:0 0 15px rgba(0,0,0,0.5);
-  color:#fff;
-  position:relative;
-  height:160px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  transition: transform 0.2s, border 0.2s;
-}
-.card:hover{
-  transform: scale(1.05);
-}
-.card.selected{
-  border: 3px solid var(--accent);
-}
-.card h3{
-  margin:0;
-  font-size:20px;
-  font-weight:700;
-}
-.price{
-  color:#fff;
-  font-weight:700;
-  margin-top:6px;
-  font-size:16px;
-}
-.btn{
-  margin-top:8px;
-  padding:8px 12px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:700;
-  color:#fff;
-  background:#003087;
-}
-.btn:disabled{
-  background:#555;
-  cursor:not-allowed;
-}
-.sidebar{
-  background:var(--card-bg);
-  padding:16px;
-  border-radius:12px;
-  box-shadow:0 0 15px rgba(0,0,0,0.5);
-}
-.order-form label{
-  display:block;
-  margin-top:12px;
-  color:var(--muted);
-}
-.order-form input, .order-form select{
-  width:100%;
-  padding:10px;
-  margin-top:6px;
-  border-radius:8px;
-  border:none;
-  background:#2a2a2a;
-  color:#fff;
-}
-.order-summary{
-  margin-top:12px;
-  padding:12px;
-  border:1px dashed var(--accent);
-  border-radius:8px;
-  color:var(--muted);
-}
-.feedback{
-  margin-top:12px;
-  padding:12px;
-  border-radius:8px;
-  background:#003087;
-  color:#fff;
-  display:none;
-  text-align:center;
-}
-footer{
-  text-align:center;
-  padding:12px;
-  margin-top:20px;
-  border-top:1px solid var(--accent);
-  color:var(--muted);
-}
-@media(max-width:900px){
-  .grid{grid-template-columns:1fr;}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recargas oficiales — UC PUBG Mobile</title>
+  <style>
+    :root {
+      --primary:#ff6600;
+      --accent:#ff9900;
+      --bg:#ffffff;
+      --card-bg:#f5f5f5;
+      --text:#111111;
+      --muted:#555555;
+      --btn:#003087;
+    }
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);}
+    header{padding:25px 10px;text-align:center;border-bottom:2px solid var(--accent);}
+    header h1{font-size:28px;margin:0;color:var(--primary);}
+    header p{margin:5px 0 0;color:var(--muted);}
+    main{max-width:1100px;margin:30px auto;padding:0 20px;display:grid;grid-template-columns:3fr 1.2fr;gap:25px;}
+    @media(max-width:900px){main{grid-template-columns:1fr;}}
+    .catalog{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
+    .card{background:var(--card-bg);border-radius:12px;padding:20px;text-align:center;box-shadow:0 0 10px rgba(0,0,0,0.1);cursor:pointer;transition:transform .2s;}
+    .card:hover{transform:translateY(-5px);}
+    .card h3{margin:0;font-size:22px;font-weight:700;}
+    .price{margin-top:10px;font-size:18px;font-weight:600;color:var(--primary);}
+    .btn{margin-top:12px;background:var(--btn);color:#fff;padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:600;transition:background .2s;width:100%;}
+    .btn:hover{background:#002060;}
+    .sidebar{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 0 10px rgba(0,0,0,0.1);}
+    label{display:block;margin-top:10px;font-size:14px;color:var(--muted);}
+    input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#111;}
+    .order-summary{margin-top:15px;padding:10px;border:1px dashed var(--accent);border-radius:8px;font-size:13px;color:var(--muted);}
+    footer{text-align:center;padding:20px;margin-top:40px;border-top:1px solid var(--accent);font-size:13px;color:var(--muted);}
+    .verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
+    .logos img{height:30px;margin-right:8px;}
+  </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-  <div class="logo">Ismewel Top-Up</div>
-  <h1>Recarga UC PUBG Mobile</h1>
-  <p class="lead">Usuarios de Ecuador pueden pagar por Banco Pichincha. Otros países deben usar PayPal. Confirmamos la recarga tras verificar el pago.</p>
-</header>
+  <header>
+    <h1>Recargas oficiales</h1>
+    <p class="verified">✅ Sitio verificado y seguro</p>
+    <p>Recarga UC de PUBG Mobile con PayPal o Banco Pichincha</p>
+  </header>
 
-<div class="grid">
-  <div class="catalog">
-    <div class="card" data-uc="60" data-price="0.99">
-      <h3>60 UC</h3>
-      <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn select-btn" data-uc="60" data-price="0.99">Seleccionar</button>
-    </div>
-    <div class="card" data-uc="300" data-price="4.99">
-      <h3>300 UC</h3>
-      <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn select-btn" data-uc="300" data-price="4.99">Seleccionar</button>
-    </div>
-    <div class="card" data-uc="680" data-price="9.99">
-      <h3>680 UC</h3>
-      <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn select-btn" data-uc="680" data-price="9.99">Seleccionar</button>
-    </div>
-    <div class="card" data-uc="1320" data-price="19.99">
-      <h3>1320 UC</h3>
-      <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn select-btn" data-uc="1320" data-price="19.99">Seleccionar</button>
-    </div>
-    <div class="card" data-uc="2640" data-price="49.99">
-      <h3>2640 UC</h3>
-      <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn select-btn" data-uc="2640" data-price="49.99">Seleccionar</button>
-    </div>
-    <div class="card" data-uc="8100" data-price="99.99">
-      <h3>8100 UC</h3>
-      <div class="price">Precio final: $<span class="final"></span></div>
-      <button class="btn select-btn" data-uc="8100" data-price="99.99">Seleccionar</button>
-    </div>
-  </div>
+  <main>
+    <section class="catalog">
+      <div class="card" data-uc="60" data-price="1"><h3>60 UC</h3><p class="price">$1.00</p></div>
+      <div class="card" data-uc="300" data-price="2"><h3>300 UC</h3><p class="price">$2.00</p></div>
+      <div class="card" data-uc="680" data-price="13.99"><h3>680 UC</h3><p class="price">$13.99</p></div>
+      <div class="card" data-uc="1320" data-price="23.99"><h3>1320 UC</h3><p class="price">$23.99</p></div>
+      <div class="card" data-uc="2640" data-price="53.99"><h3>2640 UC</h3><p class="price">$53.99</p></div>
+      <div class="card" data-uc="8100" data-price="103.99"><h3>8100 UC</h3><p class="price">$103.99</p></div>
+    </section>
 
-  <div class="sidebar">
-    <form class="order-form" id="orderForm">
-      <label>Nick PUBG</label>
-      <input type="text" id="nick" required placeholder="Tu Nick PUBG">
+    <aside class="sidebar">
+      <form id="order-form">
+        <label>Nick de PUBG</label>
+        <input type="text" id="nick" required placeholder="Tu nombre en el juego">
 
-      <label>Plataforma</label>
-      <select id="platform" required>
-        <option value="Android">Android</option>
-        <option value="iOS">iOS</option>
-      </select>
+        <label>Plataforma</label>
+        <select id="platform" required>
+          <option value="">Selecciona una</option>
+          <option value="Android">Android</option>
+          <option value="iOS">iOS</option>
+        </select>
 
-      <label>Paquete seleccionado</label>
-      <input type="text" id="pack" readonly required placeholder="Selecciona un paquete">
+        <label>Paquete seleccionado</label>
+        <input type="text" id="pack" readonly required placeholder="Selecciona un paquete">
 
-      <label>Precio final (USD)</label>
-      <input type="text" id="price" readonly required placeholder="$0.00">
+        <label>Precio final (USD)</label>
+        <input type="text" id="price" readonly required placeholder="$0.00">
 
-      <label>País de residencia</label>
-      <input type="text" id="country" required placeholder="Ej: Ecuador">
+        <label>País</label>
+        <input type="text" id="country" required placeholder="Ej: Ecuador">
 
-      <label>Método de pago</label>
-      <select id="method" required>
-        <option value="paypal">PayPal (otros países)</option>
-        <option value="bank">Banco Pichincha (solo Ecuador)</option>
-      </select>
+        <label>Método de pago</label>
+        <select id="method" required>
+          <option value="">Selecciona método</option>
+          <option value="paypal">PayPal / Tarjeta de crédito</option>
+          <option value="bank">Banco Pichincha (solo Ecuador)</option>
+        </select>
 
-      <div class="order-summary">
-        <div>Banco Pichincha (solo para usuarios de Ecuador)</div>
-        <div>Cuenta de ahorro: 2212896512</div>
-        <div>PayPal (otros países): <a href="https://www.paypal.me/Ismewel" target="_blank" style="color:var(--accent)">paypal.me/Ismewel</a></div>
-        <small>Después de pagar, envía el comprobante a <strong>quinteroismael38@gmail.com</strong> incluyendo tu nick y país de residencia.</small>
-      </div>
+        <div class="order-summary">
+          <p>💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong></p>
+          <p>🌐 PayPal / Tarjeta: 
+            <a href="https://www.paypal.me/Ismewel" target="_blank" style="color:var(--accent)">
+              paypal.me/Ismewel
+            </a>
+          </p>
+          <div class="logos">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Mastercard-logo.svg" alt="MasterCard">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
+          </div>
+          <small>Tras pagar, envía el comprobante a <strong>quinteroismael38@gmail.com</strong> con tu nick y país.</small>
+        </div>
 
-      <button class="btn" type="submit" style="width:100%;margin-top:12px;">Notificar pago</button>
-      <div class="feedback" id="feedback">¡Orden recibida! Revisa tu correo para enviar el comprobante.</div>
-    </form>
-  </div>
-</div>
+        <button class="btn" type="submit">Enviar pedido</button>
+      </form>
+    </aside>
+  </main>
 
-<footer>
-  © Ismewel Top-Up — Recargas oficiales mediante Midasbuy / canales autorizados.
-</footer>
-</div>
+  <footer>© 2025 Recargas oficiales — Todos los derechos reservados</footer>
 
-<script>
-// Calcular precio final
-document.querySelectorAll('.card').forEach(card=>{
-  const officialPrice = parseFloat(card.dataset.price);
-  const final = (officialPrice + 4).toFixed(2);
-  card.querySelector('.final').textContent = final;
-});
+  <script>
+    // Seleccionar paquete y poner precio exacto
+    document.querySelectorAll(".card").forEach(card=>{
+      card.addEventListener("click",()=>{
+        const uc = card.dataset.uc;
+        const price = card.dataset.price;
+        document.getElementById("pack").value = `${uc} UC`;
+        document.getElementById("price").value = `$${price}`;
+        window.scrollTo({top:document.getElementById("order-form").offsetTop-80,behavior:"smooth"});
+      });
+    });
 
-// Seleccionar paquete
-document.querySelectorAll('.select-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const uc = btn.dataset.uc;
-    const officialPrice = parseFloat(btn.dataset.price);
-    const final = (officialPrice + 4).toFixed(2);
-    document.getElementById('pack').value = uc + ' UC';
-    document.getElementById('price').value = '$' + final;
-    document.getElementById('nick').scrollIntoView({behavior:'smooth'});
-
-    // Resaltar tarjeta seleccionada
-    document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
-    btn.parentElement.classList.add('selected');
-  });
-});
-
-// Enviar orden simulada
-document.getElementById('orderForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const nick = document.getElementById('nick').value.trim();
-  const platform = document.getElementById('platform').value;
-  const pack = document.getElementById('pack').value;
-  const price = document.getElementById('price').value;
-  const country = document.getElementById('country').value.trim().toLowerCase();
-  const method = document.getElementById('method').value;
-
-  if(!nick || !platform || !pack || !price || !country || !method){
-    alert('Por favor completa todos los campos.');
-    return false;
-  }
-  if(country !== 'ecuador' && method==='bank'){
-    alert('Solo usuarios de Ecuador pueden pagar por Banco Pichincha. Otros países deben usar PayPal.');
-    return false;
-  }
-
-  // Guardar orden en localStorage como simulación de backend
-  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-  orders.push({nick, platform, pack, price, country, method, date: new Date().toISOString()});
-  localStorage.setItem('orders', JSON.stringify(orders));
-
-  // Mostrar feedback
-  const feedback = document.getElementById('feedback');
-  feedback.style.display = 'block';
-  feedback.scrollIntoView({behavior:'smooth'});
-
-  // Limpiar formulario
-  document.getElementById('orderForm').reset();
-  document.getElementById('pack').value = '';
-  document.getElementById('price').value = '';
-  document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
-});
-</script>
+    // Enviar orden por mail
+    document.getElementById("order-form").addEventListener("submit",e=>{
+      e.preventDefault();
+      const nick = document.getElementById("nick").value;
+      const platform = document.getElementById("platform").value;
+      const pack = document.getElementById("pack").value;
+      const price = document.getElementById("price").value;
+      const country = document.getElementById("country").value;
+      const method = document.getElementById("method").value;
+      const subject = encodeURIComponent(`Nueva orden UC - ${pack} - ${nick}`);
+      const body = encodeURIComponent(
+        `Orden de recarga:\n\nNick: ${nick}\nPlataforma: ${platform}\nPaquete: ${pack}\nPrecio: ${price}\nPaís: ${country}\nMétodo: ${method}\n\nEnviar comprobante a quinteroismael38@gmail.com`
+      );
+      window.location.href = `mailto:quinteroismael38@gmail.com?subject=${subject}&body=${body}`;
+    });
+  </script>
 </body>
 </html>
