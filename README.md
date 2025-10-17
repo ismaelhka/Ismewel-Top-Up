@@ -1,5 +1,4 @@
 # Ismewel-Top-Up
-Página web para recargar UC de PUBG Mobile con PayPal y Banco Pichincha.
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -108,7 +107,7 @@ input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px
 <div class="payment-methods" id="payment-methods">
   <div class="payment-method" id="paypal-method">
     🌐 PayPal / Tarjeta de débito: 
-    <a id="paypal-link" href="https://www.paypal.com/paypalme/jaimeroldos2018@gmail.com/1" target="_blank">
+    <a id="paypal-link" href="https://www.paypal.com/paypalme/aroontigre@gmail.com/1" target="_blank">
       Pagar con PayPal o tarjeta de débito
     </a>
   </div>
@@ -137,7 +136,7 @@ cards.forEach(card=>{
     const price = card.dataset.price;
     const uc = card.dataset.uc;
     priceInput.value = `$${price}`;
-    paypalLink.href = `https://www.paypal.com/paypalme/jaimeroldos2018@gmail.com/${price}`;
+    paypalLink.href = `https://www.paypal.com/paypalme/aroontigre@gmail.com/${price}`;
     paymentMethods.style.display = 'block';
   });
 });
@@ -146,26 +145,4 @@ cards.forEach(card=>{
 document.getElementById('order-form').addEventListener('submit', e=>{
   e.preventDefault();
   const nick = document.getElementById('nick').value;
-  const platform = document.getElementById('platform').value;
-  const uc = document.querySelector('.card[style*="border"]')?.dataset.uc || '';
-  const price = priceInput.value;
-  const country = document.getElementById('country').value;
-  const method = (country.toLowerCase() === 'ecuador') ? 'Banco Pichincha / PayPal' : 'PayPal / Tarjeta';
-  const subject = encodeURIComponent(`Nueva orden UC - ${uc} UC - ${nick}`);
-  const body = encodeURIComponent(
-`Orden de recarga:
-
-Nick: ${nick}
-Plataforma: ${platform}
-Paquete: ${uc} UC
-Precio: ${price}
-País: ${country}
-Método: ${method}
-
-Enviar comprobante a jaimeroldos2018@gmail.com`
-  );
-  window.location.href = `mailto:jaimeroldos2018@gmail.com?subject=${subject}&body=${body}`;
-});
-</script>
-</body>
-</html>
+  const platform = document.getElementById('
