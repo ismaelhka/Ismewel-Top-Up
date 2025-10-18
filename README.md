@@ -28,9 +28,10 @@ input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px
 .card p{margin:8px 0 0;font-weight:700;color:var(--accent);}
 .payment-methods{display:none;margin-top:15px;}
 .payment-method{padding:10px;border:1px solid #ddd;border-radius:8px;margin-top:8px;background:#fafafa;}
-.payment-method strong{color:var(--primary);}
 footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-size:13px;}
 .verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
+.btn{margin-top:12px;background:var(--btn);color:#fff;padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:600;transition:background .2s;width:100%;}
+.btn:hover{background:#002060;}
 </style>
 </head>
 <body>
@@ -119,8 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const paypalButtonsContainer = document.getElementById('paypal-buttons');
   let selectedPrice = 0;
 
-  function renderPayPalButton(amount) {
-    paypalButtonsContainer.innerHTML = '';
+  function renderPayPalButton(amount){
+    paypalButtonsContainer.innerHTML = ''; // limpia si hay botón previo
     if(amount <= 0) return;
 
     // Botón clásico HTML de PayPal
@@ -136,10 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <input type="hidden" name="amount" value="${amount.toFixed(2)}">
       <input type="hidden" name="currency_code" value="USD">
       <input type="hidden" name="no_shipping" value="1">
-      <input type="hidden" name="return" value="">
-      <input type="hidden" name="cancel_return" value="">
       <input type="submit" value="Pagar $${amount.toFixed(2)} con PayPal" class="btn">
     `;
+
     paypalButtonsContainer.appendChild(form);
   }
 
