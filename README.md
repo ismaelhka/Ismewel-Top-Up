@@ -56,12 +56,12 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <label>Paquete UC</label>
 <div class="cards">
-  <div class="card" data-uc="60" data-price="1.00"><h3>60 UC</h3><p>$1.00</p></div>
-  <div class="card" data-uc="300" data-price="6.99"><h3>300 UC</h3><p>$6.99</p></div>
-  <div class="card" data-uc="680" data-price="13.99"><h3>680 UC</h3><p>$13.99</p></div>
-  <div class="card" data-uc="1320" data-price="23.99"><h3>1320 UC</h3><p>$23.99</p></div>
-  <div class="card" data-uc="2640" data-price="53.99"><h3>2640 UC</h3><p>$53.99</p></div>
-  <div class="card" data-uc="8100" data-price="103.99"><h3>8100 UC</h3><p>$103.99</p></div>
+  <div class="card" data-uc="60" data-price="6.04"><h3>60 UC</h3><p>$6.04</p></div>
+  <div class="card" data-uc="300" data-price="13.04"><h3>300 UC</h3><p>$13.04</p></div>
+  <div class="card" data-uc="680" data-price="23.04"><h3>680 UC</h3><p>$23.04</p></div>
+  <div class="card" data-uc="1320" data-price="44.04"><h3>1320 UC</h3><p>$44.04</p></div>
+  <div class="card" data-uc="2640" data-price="85.04"><h3>2640 UC</h3><p>$85.04</p></div>
+  <div class="card" data-uc="8100" data-price="310.04"><h3>8100 UC</h3><p>$310.04</p></div>
 </div>
 
 <label>Precio final (USD)</label>
@@ -87,8 +87,8 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <div class="payment-methods" id="payment-methods">
   <div class="payment-method" id="paypal-method">
-    🌐 PayPal / Tarjeta de débito: 
-    <a id="paypal-link" href="https://www.paypal.me/Ismewel" target="_blank">Pagar con PayPal o tarjeta de débito</a>
+    🌐 Pagar con PayPal / Tarjeta de débito:
+    <div id="paypal-buttons-container"></div>
   </div>
   <div class="payment-method" id="bank-method">
     💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong>
@@ -101,24 +101,48 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <footer>© 2025 Recargas oficiales — Todos los derechos reservados</footer>
 
+<script src="https://www.paypal.com/sdk/js?client-id=S29ADWZU8J9GY&currency=USD"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.card');
   const priceInput = document.getElementById('price');
-  const paypalLink = document.getElementById('paypal-link');
   const paymentMethods = document.getElementById('payment-methods');
+  const paypalContainer = document.getElementById('paypal-buttons-container');
+
+  let selectedPrice = 0;
+  let selectedItem = '';
 
   cards.forEach(card => {
     card.addEventListener('click', () => {
       cards.forEach(c => c.style.border="none");
       card.style.border="2px solid var(--primary)";
 
-      const price = parseFloat(card.dataset.price).toFixed(2); // número limpio
-      const uc = card.dataset.uc;
-      
-      priceInput.value = `$${price}`;
-      paypalLink.href = `https://www.paypal.me/Ismewel/${price}`; // solo número
+      selectedPrice = parseFloat(card.dataset.price).toFixed(2);
+      selectedItem = card.dataset.uc + " UC";
+
+      priceInput.value = `$${selectedPrice}`;
       paymentMethods.style.display = 'block';
+
+      // Limpiar botones antiguos
+      paypalContainer.innerHTML = '';
+
+      // Crear botón de PayPal para el paquete seleccionado
+      paypal.Buttons({
+        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              description: selectedItem,
+              amount: { value: selectedPrice }
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert('Pago completado por ' + details.payer.name.given_name);
+          });
+        }
+      }).render('#paypal-buttons-container');
     });
   });
 
