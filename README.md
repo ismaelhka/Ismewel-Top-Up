@@ -118,34 +118,36 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 <footer>© 2025 Recargas oficiales — Todos los derechos reservados</footer>
 
 <script>
-// Paquetes clicables
-const cards = document.querySelectorAll('.card');
-const priceInput = document.getElementById('price');
-const paypalLink = document.getElementById('paypal-link');
-const paymentMethods = document.getElementById('payment-methods');
+document.addEventListener('DOMContentLoaded', () => {
+  // Paquetes clicables
+  const cards = document.querySelectorAll('.card');
+  const priceInput = document.getElementById('price');
+  const paypalLink = document.getElementById('paypal-link');
+  const paymentMethods = document.getElementById('payment-methods');
 
-cards.forEach(card=>{
-  card.addEventListener('click',()=>{
-    cards.forEach(c=>c.style.border="none");
-    card.style.border="2px solid var(--primary)";
-    const price = card.dataset.price;
-    const uc = card.dataset.uc;
-    priceInput.value = `$${price}`;
-    paypalLink.href = `https://www.paypal.com/paypalme/aroontigre@gmail.com/${price}`;
-    paymentMethods.style.display = 'block';
+  cards.forEach(card=>{
+    card.addEventListener('click',()=>{
+      cards.forEach(c=>c.style.border="none");
+      card.style.border="2px solid var(--primary)";
+      const price = card.dataset.price;
+      const uc = card.dataset.uc;
+      priceInput.value = `$${price}`;
+      paypalLink.href = `https://www.paypal.com/paypalme/aroontigre@gmail.com/${price}`;
+      paymentMethods.style.display = 'block';
+    });
   });
-});
 
-// Enviar formulario por mail
-document.getElementById('order-form').addEventListener('submit', e=>{
-  e.preventDefault();
-  const nick = document.getElementById('nick').value;
-  const platform = document.getElementById('platform').value;
-  const price = document.getElementById('price').value;
-  const country = document.getElementById('country').value;
+  // Enviar formulario por correo
+  document.getElementById('order-form').addEventListener('submit', e=>{
+    e.preventDefault();
+    const nick = document.getElementById('nick').value;
+    const platform = document.getElementById('platform').value;
+    const price = document.getElementById('price').value;
+    const country = document.getElementById('country').value;
 
-  const mailto = `mailto:aroontigre@gmail.com?subject=Pedido UC PUBG (${nick})&body=Nick: ${nick}%0APlataforma: ${platform}%0APaís: ${country}%0APrecio: ${price}`;
-  window.location.href = mailto;
+    const mailto = `mailto:aroontigre@gmail.com?subject=Pedido UC PUBG (${nick})&body=Nick: ${nick}%0APlataforma: ${platform}%0APaís: ${country}%0APrecio: ${price}`;
+    window.location.href = mailto;
+  });
 });
 </script>
 </body>
