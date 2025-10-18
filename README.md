@@ -1,5 +1,3 @@
-# Ismewel-Top-Up
-<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -58,24 +56,12 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <label>Paquete UC</label>
 <div class="cards">
-  <div class="card" data-uc="60" data-price="1.00">
-    <h3>60 UC</h3><p>$1.00</p>
-  </div>
-  <div class="card" data-uc="300" data-price="6.99">
-    <h3>300 UC</h3><p>$6.99</p>
-  </div>
-  <div class="card" data-uc="680" data-price="13.99">
-    <h3>680 UC</h3><p>$13.99</p>
-  </div>
-  <div class="card" data-uc="1320" data-price="23.99">
-    <h3>1320 UC</h3><p>$23.99</p>
-  </div>
-  <div class="card" data-uc="2640" data-price="53.99">
-    <h3>2640 UC</h3><p>$53.99</p>
-  </div>
-  <div class="card" data-uc="8100" data-price="103.99">
-    <h3>8100 UC</h3><p>$103.99</p>
-  </div>
+  <div class="card" data-uc="60" data-price="1.00"><h3>60 UC</h3><p>$1.00</p></div>
+  <div class="card" data-uc="300" data-price="6.99"><h3>300 UC</h3><p>$6.99</p></div>
+  <div class="card" data-uc="680" data-price="13.99"><h3>680 UC</h3><p>$13.99</p></div>
+  <div class="card" data-uc="1320" data-price="23.99"><h3>1320 UC</h3><p>$23.99</p></div>
+  <div class="card" data-uc="2640" data-price="53.99"><h3>2640 UC</h3><p>$53.99</p></div>
+  <div class="card" data-uc="8100" data-price="103.99"><h3>8100 UC</h3><p>$103.99</p></div>
 </div>
 
 <label>Precio final (USD)</label>
@@ -102,9 +88,7 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 <div class="payment-methods" id="payment-methods">
   <div class="payment-method" id="paypal-method">
     🌐 PayPal / Tarjeta de débito: 
-    <a id="paypal-link" href="#" target="_blank">
-      Pagar con PayPal o tarjeta de débito
-    </a>
+    <a id="paypal-link" href="https://www.paypal.me/Ismewel" target="_blank">Pagar con PayPal o tarjeta de débito</a>
   </div>
   <div class="payment-method" id="bank-method">
     💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong>
@@ -119,7 +103,6 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Paquetes clicables
   const cards = document.querySelectorAll('.card');
   const priceInput = document.getElementById('price');
   const paypalLink = document.getElementById('paypal-link');
@@ -132,12 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const price = card.dataset.price;
       const uc = card.dataset.uc;
       priceInput.value = `$${price}`;
-      paypalLink.href = `https://www.paypal.com/paypalme/aroontigre@gmail.com/${price}`;
+      paypalLink.href = `https://www.paypal.me/Ismewel/${price}`;
       paymentMethods.style.display = 'block';
     });
   });
 
-  // Enviar formulario por correo
   document.getElementById('order-form').addEventListener('submit', e=>{
     e.preventDefault();
     const nick = document.getElementById('nick').value;
