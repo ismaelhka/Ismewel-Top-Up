@@ -1,3 +1,4 @@
+<!-- Ismewel-Top-Up -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -33,6 +34,7 @@ input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px
 .payment-method strong{color:var(--primary);}
 .verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
 footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-size:13px;}
+small{color:var(--muted);}
 </style>
 </head>
 <body>
@@ -44,8 +46,9 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <main>
 <form id="order-form">
-<label>Nick de PUBG</label>
-<input type="text" id="nick" required placeholder="Tu nombre en el juego">
+<label>UID de PUBG</label>
+<input type="text" id="uid" required placeholder="Ej: 123456789">
+<small>El UID lo encuentras en tu perfil del juego (números únicos)</small>
 
 <label>Plataforma</label>
 <select id="platform" required>
@@ -56,12 +59,24 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <label>Paquete UC</label>
 <div class="cards">
-  <div class="card" data-uc="60" data-price="6.04"><h3>60 UC</h3><p>$6.04</p></div>
-  <div class="card" data-uc="300" data-price="13.04"><h3>300 UC</h3><p>$13.04</p></div>
-  <div class="card" data-uc="680" data-price="23.04"><h3>680 UC</h3><p>$23.04</p></div>
-  <div class="card" data-uc="1320" data-price="44.04"><h3>1320 UC</h3><p>$44.04</p></div>
-  <div class="card" data-uc="2640" data-price="85.04"><h3>2640 UC</h3><p>$85.04</p></div>
-  <div class="card" data-uc="8100" data-price="310.04"><h3>8100 UC</h3><p>$310.04</p></div>
+  <div class="card" data-uc="60" data-price="1.04">
+    <h3>60 UC</h3><p>$1.04</p>
+  </div>
+  <div class="card" data-uc="300" data-price="6.04">
+    <h3>300 UC</h3><p>$6.04</p>
+  </div>
+  <div class="card" data-uc="680" data-price="13.04">
+    <h3>680 UC</h3><p>$13.04</p>
+  </div>
+  <div class="card" data-uc="1320" data-price="23.04">
+    <h3>1320 UC</h3><p>$23.04</p>
+  </div>
+  <div class="card" data-uc="2640" data-price="53.04">
+    <h3>2640 UC</h3><p>$53.04</p>
+  </div>
+  <div class="card" data-uc="8100" data-price="103.04">
+    <h3>8100 UC</h3><p>$103.04</p>
+  </div>
 </div>
 
 <label>Precio final (USD)</label>
@@ -87,8 +102,10 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <div class="payment-methods" id="payment-methods">
   <div class="payment-method" id="paypal-method">
-    🌐 Pagar con PayPal / Tarjeta de débito:
-    <div id="paypal-buttons-container"></div>
+    🌐 PayPal / Tarjeta de débito: 
+    <a id="paypal-link" href="https://www.paypal.me/Ismewel" target="_blank">
+      Pagar con PayPal o tarjeta de débito
+    </a>
   </div>
   <div class="payment-method" id="bank-method">
     💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong>
@@ -101,59 +118,38 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <footer>© 2025 Recargas oficiales — Todos los derechos reservados</footer>
 
-<script src="https://www.paypal.com/sdk/js?client-id=S29ADWZU8J9GY&currency=USD"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.card');
   const priceInput = document.getElementById('price');
+  const paypalLink = document.getElementById('paypal-link');
   const paymentMethods = document.getElementById('payment-methods');
-  const paypalContainer = document.getElementById('paypal-buttons-container');
 
-  let selectedPrice = 0;
-  let selectedItem = '';
-
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      cards.forEach(c => c.style.border="none");
+  cards.forEach(card=>{
+    card.addEventListener('click',()=>{
+      cards.forEach(c=>c.style.border="none");
       card.style.border="2px solid var(--primary)";
-
-      selectedPrice = parseFloat(card.dataset.price).toFixed(2);
-      selectedItem = card.dataset.uc + " UC";
-
-      priceInput.value = `$${selectedPrice}`;
+      const price = card.dataset.price;
+      const uc = card.dataset.uc;
+      priceInput.value = `$${price}`;
+      paypalLink.href = `https://www.paypal.me/Ismewel/${price}`;
       paymentMethods.style.display = 'block';
-
-      // Limpiar botones antiguos
-      paypalContainer.innerHTML = '';
-
-      // Crear botón de PayPal para el paquete seleccionado
-      paypal.Buttons({
-        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              description: selectedItem,
-              amount: { value: selectedPrice }
-            }]
-          });
-        },
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function(details) {
-            alert('Pago completado por ' + details.payer.name.given_name);
-          });
-        }
-      }).render('#paypal-buttons-container');
     });
   });
 
-  document.getElementById('order-form').addEventListener('submit', e => {
+  document.getElementById('order-form').addEventListener('submit', e=>{
     e.preventDefault();
-    const nick = document.getElementById('nick').value;
+    const uid = document.getElementById('uid').value.trim();
     const platform = document.getElementById('platform').value;
     const price = document.getElementById('price').value;
     const country = document.getElementById('country').value;
 
-    const mailto = `mailto:aroontigre@gmail.com?subject=Pedido UC PUBG (${nick})&body=Nick: ${nick}%0APlataforma: ${platform}%0APaís: ${country}%0APrecio: ${price}`;
+    if(!/^\d{5,20}$/.test(uid)){
+      alert('Ingresa un UID válido (solo números).');
+      return;
+    }
+
+    const mailto = `mailto:aroontigre@gmail.com?subject=Pedido UC PUBG (${uid})&body=UID: ${uid}%0APlataforma: ${platform}%0APaís: ${country}%0APrecio: ${price}`;
     window.location.href = mailto;
   });
 });
