@@ -33,7 +33,6 @@ input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px
 .payment-method strong{color:var(--primary);}
 .verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
 footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-size:13px;}
-small{color:var(--muted);}
 </style>
 </head>
 <body>
@@ -47,7 +46,7 @@ small{color:var(--muted);}
 <form id="order-form">
 <label>ID del jugador</label>
 <input type="text" id="uid" required placeholder="Ej: 123456789">
-<small>El ID lo encuentras en tu perfil del juego (números únicos)</small>
+<small>El ID lo encuentras en tu perfil del juego (solo números)</small>
 
 <label>Plataforma</label>
 <select id="platform" required>
@@ -58,23 +57,23 @@ small{color:var(--muted);}
 
 <label>Paquete UC</label>
 <div class="cards">
-  <div class="card" data-uc="60" data-price="1.04">
-    <h3>60 UC</h3><p>$1.04</p>
+  <div class="card" data-uc="60" data-price="1.00">
+    <h3>60 UC</h3><p>$1.00</p>
   </div>
-  <div class="card" data-uc="300" data-price="6.04">
-    <h3>300 UC</h3><p>$6.04</p>
+  <div class="card" data-uc="300" data-price="6.99">
+    <h3>300 UC</h3><p>$6.99</p>
   </div>
-  <div class="card" data-uc="680" data-price="13.04">
-    <h3>680 UC</h3><p>$13.04</p>
+  <div class="card" data-uc="680" data-price="13.99">
+    <h3>680 UC</h3><p>$13.99</p>
   </div>
-  <div class="card" data-uc="1320" data-price="23.04">
-    <h3>1320 UC</h3><p>$23.04</p>
+  <div class="card" data-uc="1320" data-price="23.99">
+    <h3>1320 UC</h3><p>$23.99</p>
   </div>
-  <div class="card" data-uc="2640" data-price="53.04">
-    <h3>2640 UC</h3><p>$53.04</p>
+  <div class="card" data-uc="2640" data-price="53.99">
+    <h3>2640 UC</h3><p>$53.99</p>
   </div>
-  <div class="card" data-uc="8100" data-price="103.04">
-    <h3>8100 UC</h3><p>$103.04</p>
+  <div class="card" data-uc="8100" data-price="103.99">
+    <h3>8100 UC</h3><p>$103.99</p>
   </div>
 </div>
 
@@ -102,7 +101,7 @@ small{color:var(--muted);}
 <div class="payment-methods" id="payment-methods">
   <div class="payment-method" id="paypal-method">
     🌐 <strong>Pagar con PayPal o tarjeta de débito:</strong> 
-    <a id="paypal-link" href="#" target="_blank">Pagar ahora</a>
+    <div id="paypal-button-container"></div>
   </div>
   <div class="payment-method" id="bank-method">
     💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong>
@@ -115,30 +114,55 @@ small{color:var(--muted);}
 
 <footer>© 2025 Recargas oficiales — Todos los derechos reservados</footer>
 
+<!-- SDK de PayPal -->
+<script src="https://www.paypal.com/sdk/js?client-id=S29ADWZU8J9GY&currency=USD"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.card');
   const priceInput = document.getElementById('price');
-  const paypalLink = document.getElementById('paypal-link');
   const paymentMethods = document.getElementById('payment-methods');
+  let selectedPrice = 0;
 
   cards.forEach(card=>{
     card.addEventListener('click',()=>{
       cards.forEach(c=>c.style.border="none");
       card.style.border="2px solid var(--primary)";
-      const price = card.dataset.price;
-      priceInput.value = `$${price}`;
-      // Genera link directo con tu PayPal
-      paypalLink.href = `https://www.paypal.me/Ismewel/${price}`;
+      selectedPrice = parseFloat(card.dataset.price);
+      priceInput.value = `$${selectedPrice.toFixed(2)}`;
       paymentMethods.style.display = 'block';
+      renderPayPalButton();
     });
   });
+
+  function renderPayPalButton(){
+    // Limpia botón previo
+    document.getElementById('paypal-button-container').innerHTML = '';
+    if(selectedPrice <= 0) return;
+
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: selectedPrice.toFixed(2)
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert('Pago completado por ' + details.payer.name.given_name);
+        });
+      }
+    }).render('#paypal-button-container');
+  }
 
   document.getElementById('order-form').addEventListener('submit', e=>{
     e.preventDefault();
     const uid = document.getElementById('uid').value.trim();
     const platform = document.getElementById('platform').value;
-    const price = document.getElementById('price').value;
+    const price = priceInput.value;
     const country = document.getElementById('country').value;
 
     if(!/^\d{5,20}$/.test(uid)){
