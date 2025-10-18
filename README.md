@@ -1,4 +1,3 @@
-<!-- Ismewel-Top-Up -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -46,9 +45,9 @@ small{color:var(--muted);}
 
 <main>
 <form id="order-form">
-<label>UID de PUBG</label>
+<label>ID del jugador</label>
 <input type="text" id="uid" required placeholder="Ej: 123456789">
-<small>El UID lo encuentras en tu perfil del juego (números únicos)</small>
+<small>El ID lo encuentras en tu perfil del juego (números únicos)</small>
 
 <label>Plataforma</label>
 <select id="platform" required>
@@ -102,10 +101,8 @@ small{color:var(--muted);}
 
 <div class="payment-methods" id="payment-methods">
   <div class="payment-method" id="paypal-method">
-    🌐 PayPal / Tarjeta de débito: 
-    <a id="paypal-link" href="https://www.paypal.me/Ismewel" target="_blank">
-      Pagar con PayPal o tarjeta de débito
-    </a>
+    🌐 <strong>Pagar con PayPal o tarjeta de débito:</strong> 
+    <a id="paypal-link" href="https://www.paypal.me/Ismewel" target="_blank">Click aquí para pagar</a>
   </div>
   <div class="payment-method" id="bank-method">
     💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong>
@@ -130,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cards.forEach(c=>c.style.border="none");
       card.style.border="2px solid var(--primary)";
       const price = card.dataset.price;
-      const uc = card.dataset.uc;
       priceInput.value = `$${price}`;
       paypalLink.href = `https://www.paypal.me/Ismewel/${price}`;
       paymentMethods.style.display = 'block';
@@ -145,11 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const country = document.getElementById('country').value;
 
     if(!/^\d{5,20}$/.test(uid)){
-      alert('Ingresa un UID válido (solo números).');
+      alert('Ingresa un ID válido (solo números).');
       return;
     }
 
-    const mailto = `mailto:aroontigre@gmail.com?subject=Pedido UC PUBG (${uid})&body=UID: ${uid}%0APlataforma: ${platform}%0APaís: ${country}%0APrecio: ${price}`;
+    const mailto = `mailto:aroontigre@gmail.com?subject=Pedido UC PUBG (${uid})&body=ID del jugador: ${uid}%0APlataforma: ${platform}%0APaís: ${country}%0APrecio: ${price}`;
     window.location.href = mailto;
   });
 });
