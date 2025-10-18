@@ -1,4 +1,5 @@
 # Ismewel-Top-Up
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -33,6 +34,7 @@ input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px
 .payment-method{padding:10px;border:1px solid #ddd;border-radius:8px;margin-top:8px;background:#fafafa;}
 .payment-method strong{color:var(--primary);}
 .verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
+footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-size:13px;}
 </style>
 </head>
 <body>
@@ -56,29 +58,23 @@ input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px
 
 <label>Paquete UC</label>
 <div class="cards">
-  <div class="card" data-uc="60" data-price="1">
-    <h3>60 UC</h3>
-    <p>$1.00</p>
+  <div class="card" data-uc="60" data-price="1.00">
+    <h3>60 UC</h3><p>$1.00</p>
   </div>
   <div class="card" data-uc="300" data-price="6.99">
-    <h3>300 UC</h3>
-    <p>$6.99</p>
+    <h3>300 UC</h3><p>$6.99</p>
   </div>
   <div class="card" data-uc="680" data-price="13.99">
-    <h3>680 UC</h3>
-    <p>$13.99</p>
+    <h3>680 UC</h3><p>$13.99</p>
   </div>
   <div class="card" data-uc="1320" data-price="23.99">
-    <h3>1320 UC</h3>
-    <p>$23.99</p>
+    <h3>1320 UC</h3><p>$23.99</p>
   </div>
   <div class="card" data-uc="2640" data-price="53.99">
-    <h3>2640 UC</h3>
-    <p>$53.99</p>
+    <h3>2640 UC</h3><p>$53.99</p>
   </div>
   <div class="card" data-uc="8100" data-price="103.99">
-    <h3>8100 UC</h3>
-    <p>$103.99</p>
+    <h3>8100 UC</h3><p>$103.99</p>
   </div>
 </div>
 
@@ -101,13 +97,12 @@ input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px
   <option value="Uruguay">Uruguay</option>
   <option value="Paraguay">Paraguay</option>
   <option value="Bolivia">Bolivia</option>
-  <!-- Agrega todos los países que necesites -->
 </select>
 
 <div class="payment-methods" id="payment-methods">
   <div class="payment-method" id="paypal-method">
     🌐 PayPal / Tarjeta de débito: 
-    <a id="paypal-link" href="https://www.paypal.com/paypalme/aroontigre@gmail.com/1" target="_blank">
+    <a id="paypal-link" href="#" target="_blank">
       Pagar con PayPal o tarjeta de débito
     </a>
   </div>
@@ -145,4 +140,13 @@ cards.forEach(card=>{
 document.getElementById('order-form').addEventListener('submit', e=>{
   e.preventDefault();
   const nick = document.getElementById('nick').value;
-  const platform = document.getElementById('
+  const platform = document.getElementById('platform').value;
+  const price = document.getElementById('price').value;
+  const country = document.getElementById('country').value;
+
+  const mailto = `mailto:aroontigre@gmail.com?subject=Pedido UC PUBG (${nick})&body=Nick: ${nick}%0APlataforma: ${platform}%0APaís: ${country}%0APrecio: ${price}`;
+  window.location.href = mailto;
+});
+</script>
+</body>
+</html>
