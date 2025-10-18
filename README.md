@@ -102,7 +102,7 @@ small{color:var(--muted);}
 <div class="payment-methods" id="payment-methods">
   <div class="payment-method" id="paypal-method">
     🌐 <strong>Pagar con PayPal o tarjeta de débito:</strong> 
-    <a id="paypal-link" href="https://www.paypal.me/Ismewel" target="_blank">Click aquí para pagar</a>
+    <a id="paypal-link" href="#" target="_blank">Pagar ahora</a>
   </div>
   <div class="payment-method" id="bank-method">
     💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong>
@@ -128,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.border="2px solid var(--primary)";
       const price = card.dataset.price;
       priceInput.value = `$${price}`;
+      // Genera link directo con tu PayPal
       paypalLink.href = `https://www.paypal.me/Ismewel/${price}`;
       paymentMethods.style.display = 'block';
     });
