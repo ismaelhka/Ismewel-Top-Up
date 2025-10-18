@@ -108,19 +108,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const paypalLink = document.getElementById('paypal-link');
   const paymentMethods = document.getElementById('payment-methods');
 
-  cards.forEach(card=>{
-    card.addEventListener('click',()=>{
-      cards.forEach(c=>c.style.border="none");
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      cards.forEach(c => c.style.border="none");
       card.style.border="2px solid var(--primary)";
-      const price = card.dataset.price;
+
+      const price = parseFloat(card.dataset.price).toFixed(2); // número limpio
       const uc = card.dataset.uc;
+      
       priceInput.value = `$${price}`;
-      paypalLink.href = `https://www.paypal.me/Ismewel/${price}`;
+      paypalLink.href = `https://www.paypal.me/Ismewel/${price}`; // solo número
       paymentMethods.style.display = 'block';
     });
   });
 
-  document.getElementById('order-form').addEventListener('submit', e=>{
+  document.getElementById('order-form').addEventListener('submit', e => {
     e.preventDefault();
     const nick = document.getElementById('nick').value;
     const platform = document.getElementById('platform').value;
