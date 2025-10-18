@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -22,8 +21,6 @@ header p{margin:5px 0 0;color:var(--muted);}
 main{max-width:1000px;margin:30px auto;padding:0 20px;}
 label{display:block;margin-top:10px;font-size:14px;color:var(--muted);}
 input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#111;}
-.btn{margin-top:12px;background:var(--btn);color:#fff;padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:600;transition:background .2s;width:100%;}
-.btn:hover{background:#002060;}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-top:15px;}
 .card{background:var(--card-bg);border-radius:12px;padding:20px;text-align:center;box-shadow:0 3px 8px rgba(0,0,0,0.15);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
 .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.3);}
@@ -32,8 +29,8 @@ input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px
 .payment-methods{display:none;margin-top:15px;}
 .payment-method{padding:10px;border:1px solid #ddd;border-radius:8px;margin-top:8px;background:#fafafa;}
 .payment-method strong{color:var(--primary);}
-.verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
 footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-size:13px;}
+.verified{color:#009900;font-weight:700;font-size:14px;margin-bottom:10px;}
 </style>
 </head>
 <body>
@@ -47,7 +44,6 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 <form id="order-form">
 <label>ID del jugador</label>
 <input type="text" id="uid" required placeholder="Ej: 123456789">
-<small>El ID lo encuentras en tu perfil del juego (solo números)</small>
 
 <label>Plataforma</label>
 <select id="platform" required>
@@ -101,8 +97,8 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <div class="payment-methods" id="payment-methods">
   <div class="payment-method" id="paypal-method">
-    🌐 <strong>Pagar con PayPal o tarjeta de débito:</strong> 
-    <div id="paypal-button-container"></div>
+    🌐 <strong>Pagar con PayPal o tarjeta de débito:</strong>
+    <div id="paypal-buttons"></div>
   </div>
   <div class="payment-method" id="bank-method">
     💳 Banco Pichincha (solo Ecuador): <strong>2212896512</strong>
@@ -115,15 +111,37 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <footer>© 2025 Recargas oficiales — Todos los derechos reservados</footer>
 
-<!-- SDK de PayPal -->
-<script src="https://www.paypal.com/sdk/js?client-id=S29ADWZU8J9GY&currency=USD"></script>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.card');
   const priceInput = document.getElementById('price');
   const paymentMethods = document.getElementById('payment-methods');
+  const paypalButtonsContainer = document.getElementById('paypal-buttons');
   let selectedPrice = 0;
+
+  function renderPayPalButton(amount) {
+    paypalButtonsContainer.innerHTML = '';
+    if(amount <= 0) return;
+
+    // Botón clásico HTML de PayPal
+    const form = document.createElement('form');
+    form.action = "https://www.paypal.com/cgi-bin/webscr";
+    form.method = "post";
+    form.target = "_blank";
+
+    form.innerHTML = `
+      <input type="hidden" name="cmd" value="_xclick">
+      <input type="hidden" name="business" value="S29ADWZU8J9GY">
+      <input type="hidden" name="item_name" value="Recarga UC PUBG Mobile">
+      <input type="hidden" name="amount" value="${amount.toFixed(2)}">
+      <input type="hidden" name="currency_code" value="USD">
+      <input type="hidden" name="no_shipping" value="1">
+      <input type="hidden" name="return" value="">
+      <input type="hidden" name="cancel_return" value="">
+      <input type="submit" value="Pagar $${amount.toFixed(2)} con PayPal" class="btn">
+    `;
+    paypalButtonsContainer.appendChild(form);
+  }
 
   cards.forEach(card => {
     card.addEventListener('click', () => {
@@ -136,37 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  function renderPayPalButton(amount) {
-    const container = document.getElementById('paypal-button-container');
-    container.innerHTML = ''; // limpia si hay otro botón
-
-    paypal.Buttons({
-      style: {
-        layout: 'vertical',
-        color: 'gold',
-        shape: 'rect',
-        label: 'paypal'
-      },
-      createOrder: function (data, actions) {
-        return actions.order.create({
-          purchase_units: [{
-            description: "Recarga UC PUBG Mobile",
-            amount: { value: amount.toFixed(2) }
-          }]
-        });
-      },
-      onApprove: function (data, actions) {
-        return actions.order.capture().then(function (details) {
-          alert('✅ Pago completado con éxito por ' + details.payer.name.given_name);
-        });
-      },
-      onError: function (err) {
-        console.error(err);
-        alert("❌ Error al procesar el pago, intenta de nuevo.");
-      }
-    }).render('#paypal-button-container');
-  }
-
   document.getElementById('order-form').addEventListener('submit', e => {
     e.preventDefault();
     const uid = document.getElementById('uid').value.trim();
@@ -174,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const price = priceInput.value;
     const country = document.getElementById('country').value;
 
-    if (!/^\d{5,20}$/.test(uid)) {
+    if(!/^\d{5,20}$/.test(uid)){
       alert('Ingresa un ID válido (solo números).');
       return;
     }
