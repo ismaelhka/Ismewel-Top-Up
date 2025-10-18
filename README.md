@@ -121,10 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedPrice = 0;
 
   function renderPayPalButton(amount){
-    paypalButtonsContainer.innerHTML = ''; // limpia si hay botón previo
+    paypalButtonsContainer.innerHTML = '';
     if(amount <= 0) return;
 
-    // Botón clásico HTML de PayPal
     const form = document.createElement('form');
     form.action = "https://www.paypal.com/cgi-bin/webscr";
     form.method = "post";
