@@ -55,23 +55,35 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 
 <label>Paquete UC</label>
 <div class="cards">
-  <div class="card" data-uc="60" data-price="1.00">
-    <h3>60 UC</h3><p>$1.00</p>
+  <div class="card" data-uc="60" data-price="0.95">
+    <h3>60 UC</h3><p>$0.95</p>
   </div>
-  <div class="card" data-uc="300" data-price="6.99">
-    <h3>300 UC</h3><p>$6.99</p>
+  <div class="card" data-uc="300" data-price="4.75">
+    <h3>300 UC</h3><p>$4.75</p>
   </div>
-  <div class="card" data-uc="680" data-price="13.99">
-    <h3>680 UC</h3><p>$13.99</p>
+  <div class="card" data-uc="600" data-price="9.70">
+    <h3>600 UC</h3><p>$9.70</p>
   </div>
-  <div class="card" data-uc="1320" data-price="23.99">
-    <h3>1320 UC</h3><p>$23.99</p>
+  <div class="card" data-uc="1800" data-price="23.50">
+    <h3>1800 UC</h3><p>$23.50</p>
   </div>
-  <div class="card" data-uc="2640" data-price="53.99">
-    <h3>2640 UC</h3><p>$53.99</p>
+  <div class="card" data-uc="3850" data-price="47.55">
+    <h3>3850 UC</h3><p>$47.55</p>
   </div>
-  <div class="card" data-uc="8100" data-price="103.99">
-    <h3>8100 UC</h3><p>$103.99</p>
+  <div class="card" data-uc="8100" data-price="95.30">
+    <h3>8100 UC</h3><p>$95.30</p>
+  </div>
+  <div class="card" data-uc="16200" data-price="188.00">
+    <h3>16200 UC</h3><p>$188.00</p>
+  </div>
+  <div class="card" data-uc="24300" data-price="285.00">
+    <h3>24300 UC</h3><p>$285.00</p>
+  </div>
+  <div class="card" data-uc="32400" data-price="384.00">
+    <h3>32400 UC</h3><p>$384.00</p>
+  </div>
+  <div class="card" data-uc="40500" data-price="484.00">
+    <h3>40500 UC</h3><p>$484.00</p>
   </div>
 </div>
 
@@ -138,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
       <input type="hidden" name="no_shipping" value="1">
       <input type="submit" value="Pagar $${amount.toFixed(2)} con PayPal" class="btn">
     `;
-
     paypalButtonsContainer.appendChild(form);
   }
 
