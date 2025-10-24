@@ -25,7 +25,8 @@ input,select{width:100%;margin-top:5px;padding:10px;border-radius:6px;border:1px
 .card{background:var(--card-bg);border-radius:12px;padding:20px;text-align:center;box-shadow:0 3px 8px rgba(0,0,0,0.15);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
 .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.3);}
 .card h3{margin:0;color:var(--primary);}
-.card p{margin:8px 0 0;font-weight:700;color:var(--accent);}
+.card p{margin:6px 0 0;font-weight:700;color:var(--accent);}
+.card s{color:#777;font-size:13px;display:block;}
 .payment-methods{display:none;margin-top:15px;}
 .payment-method{padding:10px;border:1px solid #ddd;border-radius:8px;margin-top:8px;background:#fafafa;}
 footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-size:13px;}
@@ -56,34 +57,54 @@ footer{text-align:center;margin-top:40px;padding:15px;color:var(--muted);font-si
 <label>Paquete UC</label>
 <div class="cards">
   <div class="card" data-uc="60" data-price="0.95">
-    <h3>60 UC</h3><p>$0.95</p>
+    <h3>60 UC</h3>
+    <p>$0.95</p>
+    <s>$1.00</s>
   </div>
   <div class="card" data-uc="300" data-price="4.75">
-    <h3>300 UC</h3><p>$4.75</p>
+    <h3>300 UC</h3>
+    <p>$4.75</p>
+    <s>$6.99</s>
   </div>
   <div class="card" data-uc="600" data-price="9.70">
-    <h3>600 UC</h3><p>$9.70</p>
+    <h3>600 UC</h3>
+    <p>$9.70</p>
+    <s>$13.99</s>
   </div>
   <div class="card" data-uc="1800" data-price="23.50">
-    <h3>1800 UC</h3><p>$23.50</p>
+    <h3>1800 UC</h3>
+    <p>$23.50</p>
+    <s>$24.99</s>
   </div>
   <div class="card" data-uc="3850" data-price="47.55">
-    <h3>3850 UC</h3><p>$47.55</p>
+    <h3>3850 UC</h3>
+    <p>$47.55</p>
+    <s>$49.99</s>
   </div>
   <div class="card" data-uc="8100" data-price="95.30">
-    <h3>8100 UC</h3><p>$95.30</p>
+    <h3>8100 UC</h3>
+    <p>$95.30</p>
+    <s>$99.99</s>
   </div>
   <div class="card" data-uc="16200" data-price="188.00">
-    <h3>16200 UC</h3><p>$188.00</p>
+    <h3>16200 UC</h3>
+    <p>$188.00</p>
+    <s>$199.99</s>
   </div>
   <div class="card" data-uc="24300" data-price="285.00">
-    <h3>24300 UC</h3><p>$285.00</p>
+    <h3>24300 UC</h3>
+    <p>$285.00</p>
+    <s>$299.99</s>
   </div>
   <div class="card" data-uc="32400" data-price="384.00">
-    <h3>32400 UC</h3><p>$384.00</p>
+    <h3>32400 UC</h3>
+    <p>$384.00</p>
+    <s>$399.99</s>
   </div>
   <div class="card" data-uc="40500" data-price="484.00">
-    <h3>40500 UC</h3><p>$484.00</p>
+    <h3>40500 UC</h3>
+    <p>$484.00</p>
+    <s>$499.99</s>
   </div>
 </div>
 
